@@ -1,0 +1,46 @@
+{
+    "name": "wigeeky/todo",
+    "description": "A package that adds the to-do functionality to your Laravel applications.",
+    "keywords": ["laravel", "todo"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mohammad H. Maazallahi",
+            "email": "mohammadhoseinmazalahi@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.3|^8.0",
+        "laravel/framework": "^7.0"
+    },
+    "require-dev": {
+        "guzzlehttp/guzzle": "^6.0|^7.0",
+        "orchestra/testbench": "^5.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "WiGeeky\\Todo\\": "src/",
+            "WiGeeky\\Todo\\Database\\Factories\\": "database/factories/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "WiGeeky\\Todo\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.x-dev"
+        },
+        "laravel": {
+            "providers": [
+                "WiGeeky\\Todo\\TodoServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
