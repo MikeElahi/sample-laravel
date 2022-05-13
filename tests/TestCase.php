@@ -22,4 +22,9 @@ class TestCase extends Orchestra
     {
         return [TodoServiceProvider::class];
     }
+
+    protected function defineDatabaseMigrations()
+    {
+        $this->loadLaravelMigrations();
+    }
 }
