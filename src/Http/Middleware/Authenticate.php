@@ -15,15 +15,15 @@ class Authenticate
      * @param Request $request
      * @param Closure $next
      * @return mixed
+     * @throws AuthenticationException
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!$request->hasHeader('Authorization')) {
+        if (empty($request->bearerToken())) {
             throw new AuthenticationException;
         }
-
         Todo::$authModel::query()
-            ->where('token', $request->header('Authorization'))
+            ->where('token', $request->bearerToken())
             ->firstOr(['token'], function () {
                 throw new AuthenticationException;
             });
