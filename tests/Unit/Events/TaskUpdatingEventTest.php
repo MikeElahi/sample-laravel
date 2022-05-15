@@ -7,7 +7,7 @@ use WiGeeky\Todo\Events\TaskUpdating;
 use WiGeeky\Todo\Models\Task;
 use WiGeeky\Todo\Tests\TestCase;
 
-class TaskUpdatingEventTest extends TestCase // todo remove
+class TaskUpdatingEventTest extends TestCase
 {
     /** @test */
     public function it_gets_dispatched_on_task_update()

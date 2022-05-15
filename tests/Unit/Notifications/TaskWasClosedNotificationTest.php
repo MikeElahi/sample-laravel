@@ -7,7 +7,7 @@ use WiGeeky\Todo\Models\Task;
 use WiGeeky\Todo\Notifications\TaskWasClosedNotification;
 use WiGeeky\Todo\Tests\TestCase;
 
-class TaskWasClosedNotificationTest extends TestCase // Todo refactor FeatureTestCase
+class TaskWasClosedNotificationTest extends TestCase
 {
     /**
      * As a logged-in user, I want to receive a notification when I close the task's status.
