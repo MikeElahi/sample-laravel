@@ -47,4 +47,30 @@ class TaskControllerTest extends FeatureTestCase
             ]],
         ]);
     }
+
+    /**
+     * As a logged-in user, I should not be able to get list of other user's tasks.
+     * @test
+     */
+    public function it_does_not_list_other_user_tasks()
+    {
+        // Prepare
+        $someOtherUser = $this->createUser();
+        $someOtherUser->tasks()->createMany(
+            factory(Task::class)->times(5)->make()->toArray()
+        );
+        $someOtherUser->tasks()->each(function ($task) {
+            $task->labels()->attach(factory(Label::class)->create());
+        });
+
+        // Execute
+        $response = $this->actingAs($this->createUser())->getJson('/api/tasks');
+
+        // Assert
+        $response->assertOk();
+        $response->assertJsonCount(0, 'data');
+        $response->assertJsonStructure([
+            'data',
+        ]);
+    }
 }
