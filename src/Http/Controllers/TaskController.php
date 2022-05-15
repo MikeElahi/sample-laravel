@@ -30,12 +30,7 @@ class TaskController extends BaseController
 
     public function show(int $task): TaskResource
     {
-        $task = Task::query()->with('labels')->findOrFail($task);
-
-        // TODO move authorization to policy
-        abort_if(Gate::denies('view task', [$task, ]), Response::HTTP_NOT_FOUND);
-
-        return TaskResource::make($task);
+        return TaskResource::make(Task::query()->with('labels')->findOrFail($task));
     }
 
     public function store(Request $request): TaskResource
