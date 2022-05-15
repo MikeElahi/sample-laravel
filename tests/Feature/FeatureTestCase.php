@@ -16,16 +16,18 @@ class FeatureTestCase extends TestCase
 
     /**
      * @param array $parameters
-     * @return Builder|Model
+     * @return UserFixture
      */
-    public function createUser(array $parameters = [])
+    public function createUser(array $parameters = []): UserFixture
     {
-        return UserFixture::query()->create(array_merge([
+        $user = new UserFixture(array_merge([
            'name' => $this->faker->name,
            'email' => $this->faker->unique()->safeEmail,
            'email_verified_at' => now(),
            'password' => Hash::make('password'),
            'token' => Str::random(),
         ], $parameters));
+        $user->save();
+        return $user;
     }
 }
