@@ -4,11 +4,12 @@ namespace WiGeeky\Todo\Tests\Feature\Http\Controllers;
 
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use WiGeeky\Todo\Models\Label;
-use WiGeeky\Todo\Models\Task;
-use WiGeeky\Todo\Tests\Feature\FeatureTestCase;
+use WiGeeky\Todo\Tests\Support\WithTask;
+use WiGeeky\Todo\Tests\TestCase;
 
-class LabelTaskControllerTest extends FeatureTestCase
+class LabelTaskControllerTest extends TestCase
 {
+    use WithTask;
     use WithoutMiddleware;
 
     /**
@@ -18,13 +19,10 @@ class LabelTaskControllerTest extends FeatureTestCase
      */
     public function it_can_add_n_labels_to_a_task()
     {
-        $user = $this->createUser();
-        $task = $user->tasks()->create(
-            factory(Task::class)->make()->toArray()
-        );
+        $task = $this->createTask();
         $times = $this->faker->numberBetween(1, 10);
 
-        $response = $this->actingAs($user)->postJson(
+        $response = $this->actingAs($this->user)->postJson(
             "/api/tasks/{$task->id}/labels",
             factory(Label::class)->times($times)->make()->pluck('label')->toArray(),
         );

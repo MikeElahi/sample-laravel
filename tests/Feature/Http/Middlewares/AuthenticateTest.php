@@ -5,9 +5,9 @@ namespace WiGeeky\Todo\Tests\Feature\Http\Middlewares;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use WiGeeky\Todo\Http\Middleware\Authenticate;
-use WiGeeky\Todo\Tests\Feature\FeatureTestCase;
+use WiGeeky\Todo\Tests\TestCase;
 
-class AuthenticateTest extends FeatureTestCase
+class AuthenticateTest extends TestCase
 {
     protected function usesAuthRoutes($app)
     {
@@ -23,7 +23,7 @@ class AuthenticateTest extends FeatureTestCase
     public function it_can_authenticate_valid_user()
     {
         $response = $this->getJson('/api/auth', [
-            'Authorization' => "Bearer " . $this->createUser()->token
+            'Authorization' => "Bearer " . $this->user->token
         ]);
         $response->assertOk();
     }

@@ -5,9 +5,9 @@ namespace WiGeeky\Todo\Tests\Feature\Http\Controllers;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use WiGeeky\Todo\Models\Label;
-use WiGeeky\Todo\Tests\Feature\FeatureTestCase;
+use WiGeeky\Todo\Tests\TestCase;
 
-class LabelControllerTest extends FeatureTestCase
+class LabelControllerTest extends TestCase
 {
     use WithFaker;
     use WithoutMiddleware;
@@ -19,7 +19,7 @@ class LabelControllerTest extends FeatureTestCase
     public function it_can_add_labels()
     {
         $label = $this->faker->words(6, true);
-        $response = $this->actingAs($this->createUser())->postJson('/api/labels', [
+        $response = $this->actingAs($this->user)->postJson('/api/labels', [
             'label' => $label,
         ]);
 
@@ -37,7 +37,7 @@ class LabelControllerTest extends FeatureTestCase
     {
         $label = factory(Label::class)->create()->label;
 
-        $response = $this->actingAs($this->createUser())->postJson('/api/labels', [
+        $response = $this->actingAs($this->user)->postJson('/api/labels', [
             'label' => $label,
         ]);
 
@@ -55,7 +55,7 @@ class LabelControllerTest extends FeatureTestCase
     {
         factory(Label::class)->times(10)->create();
 
-        $response = $this->actingAs($this->createUser())->getJson('api/labels');
+        $response = $this->actingAs($this->user)->getJson('api/labels');
 
         $response->assertOk();
         $response->assertJsonCount(10, 'data');
