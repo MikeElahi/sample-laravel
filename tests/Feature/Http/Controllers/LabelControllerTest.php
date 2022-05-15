@@ -10,7 +10,7 @@ use WiGeeky\Todo\Tests\TestCase;
 class LabelControllerTest extends TestCase
 {
     use WithFaker;
-    use WithoutMiddleware;
+    
 
     /**
      * As a logged-in user, I should be able to add label. So that I can label tasks to filter those.

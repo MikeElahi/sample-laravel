@@ -2,7 +2,6 @@
 
 namespace WiGeeky\Todo\Tests\Feature\Http\Controllers;
 
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 use WiGeeky\Todo\Models\Label;
 use WiGeeky\Todo\Models\Task;
 use WiGeeky\Todo\Tests\Support\WithTask;
@@ -10,7 +9,6 @@ use WiGeeky\Todo\Tests\TestCase;
 
 class TaskControllerTest extends TestCase
 {
-    use WithoutMiddleware; // Avoid testing Authenticate middleware
     use WithTask;
 
     /**
@@ -209,10 +207,9 @@ class TaskControllerTest extends TestCase
         
         $task = $this->createTask();
 
-        $response = $this->patchJson("/api/tasks/{$task->id}", [
+        $response = $this->actingAs($this->user)->patchJson("/api/tasks/{$task->id}", [
             'status' => Task::STATUS_CLOSE,
         ]);
-
         $response->assertNoContent();
         $this->assertDatabaseHas('tasks', [
             'status' => Task::STATUS_CLOSE,

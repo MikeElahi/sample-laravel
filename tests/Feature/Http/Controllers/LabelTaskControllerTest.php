@@ -10,7 +10,7 @@ use WiGeeky\Todo\Tests\TestCase;
 class LabelTaskControllerTest extends TestCase
 {
     use WithTask;
-    use WithoutMiddleware;
+    
 
     /**
      * As a logged-in user, I should be able to add 1+n labels to a task.
