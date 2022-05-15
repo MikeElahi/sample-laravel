@@ -12,7 +12,7 @@ class AuthenticateTest extends MiddlewareTestCase
     public function it_can_authenticate_valid_user()
     {
         $response = $this->getJson('/api/authenticate', [
-            'Authorization' => "Bearer " . $this->user->token
+            'Authorization' => 'Bearer '.$this->user->token,
         ]);
         $response->assertOk();
     }
@@ -23,7 +23,7 @@ class AuthenticateTest extends MiddlewareTestCase
     public function it_can_fail_to_authenticate_with_invalid_token()
     {
         $response = $this->getJson('/api/authenticate', [
-            'Authorization' => "Bearer " . Str::random()
+            'Authorization' => 'Bearer '.Str::random(),
         ]);
         $response->assertUnauthorized();
     }
@@ -35,7 +35,7 @@ class AuthenticateTest extends MiddlewareTestCase
     {
         $this->createUser(['token' => '']);
         $response = $this->getJson('/api/authenticate', [
-            'Authorization' => "Bearer "
+            'Authorization' => 'Bearer ',
         ]);
         $response->assertUnauthorized();
     }
@@ -55,9 +55,8 @@ class AuthenticateTest extends MiddlewareTestCase
     public function it_can_fail_to_authenticate_with_invalid_header()
     {
         $response = $this->getJson('/api/authenticate', [
-            'Authorization' => Str::random()
+            'Authorization' => Str::random(),
         ]);
         $response->assertUnauthorized();
     }
-
 }

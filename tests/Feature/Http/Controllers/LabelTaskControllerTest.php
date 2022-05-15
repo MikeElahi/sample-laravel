@@ -2,7 +2,6 @@
 
 namespace WiGeeky\Todo\Tests\Feature\Http\Controllers;
 
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 use WiGeeky\Todo\Models\Label;
 use WiGeeky\Todo\Tests\Support\WithTask;
 use WiGeeky\Todo\Tests\TestCase;
@@ -10,7 +9,6 @@ use WiGeeky\Todo\Tests\TestCase;
 class LabelTaskControllerTest extends TestCase
 {
     use WithTask;
-    
 
     /**
      * As a logged-in user, I should be able to add 1+n labels to a task.

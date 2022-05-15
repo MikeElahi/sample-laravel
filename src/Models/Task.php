@@ -2,15 +2,15 @@
 
 namespace WiGeeky\Todo\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Builder;
 use WiGeeky\Todo\Events\TaskUpdating;
 use WiGeeky\Todo\Todo;
 
 /**
- * Task Model
+ * Task Model.
  *
  * @property int id
  * @property string title
@@ -41,7 +41,7 @@ class Task extends Model
 
     public function scopeUser(Builder $query, $value): Builder
     {
-        if(empty($value)) {
+        if (empty($value)) {
             return $query;
         }
 
@@ -50,9 +50,10 @@ class Task extends Model
 
     public function scopeLabel(Builder $query, $value)
     {
-        if(empty($value)) {
+        if (empty($value)) {
             return $query;
         }
+
         return $query->whereHas('labels', function (Builder $q) use ($value) {
             $q->where('id', $value);
         });

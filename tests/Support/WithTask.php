@@ -2,7 +2,6 @@
 
 namespace WiGeeky\Todo\Tests\Support;
 
-use Illuminate\Database\Eloquent\Collection;
 use WiGeeky\Todo\Models\Task;
 
 trait WithTask
@@ -11,10 +10,11 @@ trait WithTask
     {
         if ($times != 1) {
             $tasks = factory(Task::class)->times($times)->make();
-            return $this->user->tasks()->createMany($tasks->toArray());
 
+            return $this->user->tasks()->createMany($tasks->toArray());
         } else {
             $tasks = factory(Task::class)->make();
+
             return $this->user->tasks()->create($tasks->toArray());
         }
     }

@@ -2,7 +2,6 @@
 
 namespace WiGeeky\Todo\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use WiGeeky\Todo\Http\Requests\LabelTaskStoreRequest;
@@ -18,7 +17,7 @@ class LabelTaskController extends Controller
     public function __invoke(int $task, LabelTaskStoreRequest $request)
     {
         Task::query()->findOrFail($task)->labels()->sync($request->input());
+
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

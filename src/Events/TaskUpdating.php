@@ -8,7 +8,8 @@ use WiGeeky\Todo\Models\Task;
 
 class TaskUpdating
 {
-    use Dispatchable, SerializesModels;
+    use Dispatchable;
+    use SerializesModels;
 
     /** @var Task */
     public $task;
@@ -17,5 +18,4 @@ class TaskUpdating
     {
         $this->task = $task;
     }
-
 }

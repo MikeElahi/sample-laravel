@@ -14,7 +14,7 @@ class LabelStoreRequest extends FormRequest
     public function rules()
     {
         return [
-          'label' => ['string', 'max:255'],
+            'label' => ['string', 'max:255'],
         ];
     }
 }

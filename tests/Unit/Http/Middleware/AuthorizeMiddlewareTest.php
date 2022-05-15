@@ -14,7 +14,7 @@ class AuthorizeMiddlewareTest extends MiddlewareTestCase
         $task = $this->createTask();
         $response = $this
             ->actingAs($this->user)
-            ->getJson('/api/authorize/' . $task->id);
+            ->getJson('/api/authorize/'.$task->id);
 
         $response->assertOk();
     }
@@ -25,7 +25,7 @@ class AuthorizeMiddlewareTest extends MiddlewareTestCase
         $task = $this->createTask();
         $response = $this
             ->actingAs($this->createUser())
-            ->getJson('/api/authorize/' . $task->id);
+            ->getJson('/api/authorize/'.$task->id);
 
         $response->assertNotFound();
     }

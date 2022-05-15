@@ -14,7 +14,7 @@ class TaskIndexRequest extends FormRequest
     public function rules()
     {
         return [
-          'label' => ['nullable', 'exists:labels,id'],
+            'label' => ['nullable', 'exists:labels,id'],
         ];
     }
 }

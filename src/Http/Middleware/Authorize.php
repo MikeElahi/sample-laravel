@@ -13,18 +13,22 @@ class Authorize
      *
      * @param Request $request
      * @param Closure $next
+     *
      * @return mixed
      */
     public function handle(Request $request, Closure $next)
     {
         if ($request->route()->hasParameter('task')) {
-            abort_if($request->route()->parameter('task') and
+            abort_if(
+                $request->route()->parameter('task') and
                 !Task::query()
                     ->where('id', (int) $request->route()->parameter('task'))
                     ->where('user_id', (int) $request->user()->id)
                     ->exists(),
-                404);
+                404
+            );
         }
+
         return $next($request);
     }
 }

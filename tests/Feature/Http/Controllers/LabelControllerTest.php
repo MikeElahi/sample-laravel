@@ -3,17 +3,16 @@
 namespace WiGeeky\Todo\Tests\Feature\Http\Controllers;
 
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 use WiGeeky\Todo\Models\Label;
 use WiGeeky\Todo\Tests\TestCase;
 
 class LabelControllerTest extends TestCase
 {
     use WithFaker;
-    
 
     /**
      * As a logged-in user, I should be able to add label. So that I can label tasks to filter those.
+     *
      * @test
      */
     public function it_can_add_labels()
@@ -25,12 +24,13 @@ class LabelControllerTest extends TestCase
 
         $response->assertCreated();
         $this->assertDatabaseHas('labels', [
-           'label' =>  $label,
+            'label' => $label,
         ]);
     }
 
     /**
-     * User may attempt to create a pre-existing label, the same label must be returned with 200 OK code
+     * User may attempt to create a pre-existing label, the same label must be returned with 200 OK code.
+     *
      * @test
      */
     public function it_can_post_existing_label()
@@ -43,12 +43,13 @@ class LabelControllerTest extends TestCase
 
         $response->assertOk();
         $this->assertDatabaseHas('labels', [
-            'label' =>  $label,
+            'label' => $label,
         ]);
     }
 
     /**
      * As a logged-in user, I should be able to get list of labels.
+     *
      * @test
      */
     public function it_can_get_a_list_of_labels()
@@ -61,9 +62,9 @@ class LabelControllerTest extends TestCase
         $response->assertJsonCount(10, 'data');
         $response->assertJsonStructure([
             'data' => ['*' => [
-               'id',
-               'label',
-               'count',
+                'id',
+                'label',
+                'count',
             ]],
         ]);
     }

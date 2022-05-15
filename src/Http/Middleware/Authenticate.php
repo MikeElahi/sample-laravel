@@ -15,22 +15,24 @@ class Authenticate
      *
      * @param Request $request
      * @param Closure $next
-     * @return mixed
+     *
      * @throws AuthenticationException
+     *
+     * @return mixed
      */
     public function handle(Request $request, Closure $next)
     {
-        if($request->user()) {
+        if ($request->user()) {
             return $next($request);
         }
 
         if (empty($request->bearerToken())) {
-            throw new AuthenticationException;
+            throw new AuthenticationException();
         }
         $user = Todo::$authModel::query()
             ->where('token', $request->bearerToken())
             ->firstOr(['token'], function () {
-                throw new AuthenticationException;
+                throw new AuthenticationException();
             });
         // Automatically mark the user as logged in
         Auth::login($user);

@@ -11,7 +11,7 @@ class UserFixture extends User
     use HasTodo;
     use Notifiable;
 
-    protected $table = "users";
+    protected $table = 'users';
 
     protected $guarded = ['id'];
 }

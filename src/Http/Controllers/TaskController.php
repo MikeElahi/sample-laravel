@@ -55,6 +55,7 @@ class TaskController extends BaseController
         Task::query()
             ->where('id', $task)
             ->update($request->only(['title', 'description']));
+
         return response(null, Response::HTTP_NO_CONTENT);
     }
 

@@ -15,9 +15,9 @@ class TodoServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->mergeConfigFrom(__DIR__ . "/../config/todo.php", "todo");
-        $this->loadMigrationsFrom(__DIR__ . "/../database/migrations");
-        $this->loadFactoriesFrom(__DIR__ . "/../database/factories");
+        $this->mergeConfigFrom(__DIR__.'/../config/todo.php', 'todo');
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        $this->loadFactoriesFrom(__DIR__.'/../database/factories');
         $this->registerRoutes();
     }
 

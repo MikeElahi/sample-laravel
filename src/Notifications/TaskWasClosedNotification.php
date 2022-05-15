@@ -24,10 +24,9 @@ class TaskWasClosedNotification extends Notification implements ShouldQueue
 
     public function toMail(): MailMessage
     {
-        return (new MailMessage)
+        return (new MailMessage())
             ->line("'{$this->task->title}' has been closed!")
             ->action('View the Task', url("/tasks/{$this->task->id}"))
             ->line('We will see you with another task soon!');
     }
-    
 }
