@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * Label Model
  *
  * @property int id
- * @property string title
+ * @property string label
  */
 class Label extends Model
 {

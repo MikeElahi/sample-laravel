@@ -12,7 +12,7 @@ class CreateLabelsTable extends Migration
     {
         Schema::create('labels', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->unique()->index();
+            $table->string('label')->unique()->index();
         });
     }
 

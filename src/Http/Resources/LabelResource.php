@@ -10,7 +10,7 @@ class LabelResource extends JsonResource
     {
         return [
             'id' => $this->resource->id,
-            'label' => $this->resource->title,
+            'label' => $this->resource->label,
             'count' => $this->resource->tasks->count(),
         ];
     }
