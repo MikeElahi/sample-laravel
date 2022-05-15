@@ -24,4 +24,19 @@ class TaskController extends BaseController
                 ->paginate()
         );
     }
+
+    public function store(Request $request): TaskResource
+    {
+        $task = Task::query()
+            ->create(array_merge(
+                $request->only(['title', 'description']),
+                ['user_id' => $request->user()->id]
+            ));
+
+        $task->labels()->attach($request->input('labels'));
+
+        return TaskResource::make(
+            $task->load('labels'),
+        );
+    }
 }

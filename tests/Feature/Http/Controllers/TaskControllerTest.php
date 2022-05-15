@@ -9,7 +9,9 @@ use WiGeeky\Todo\Tests\Feature\FeatureTestCase;
 
 class TaskControllerTest extends FeatureTestCase
 {
-    use WithoutMiddleware; // Avoid testing Authenticate middleware
+    use WithoutMiddleware;
+
+    // Avoid testing Authenticate middleware
 
 
     /**
@@ -24,7 +26,7 @@ class TaskControllerTest extends FeatureTestCase
             factory(Task::class)->times(5)->make()->toArray()
         );
         $user->tasks()->each(function ($task) {
-           $task->labels()->attach(factory(Label::class)->create());
+            $task->labels()->attach(factory(Label::class)->create());
         });
 
         // Execute
@@ -33,7 +35,7 @@ class TaskControllerTest extends FeatureTestCase
         $response->assertOk();
         $response->assertJsonCount(5, 'data');
         $response->assertJsonStructure([
-            'data' => [ '*' => [
+            'data' => ['*' => [
                 'id',
                 'title',
                 'description',
@@ -72,5 +74,38 @@ class TaskControllerTest extends FeatureTestCase
         $response->assertJsonStructure([
             'data',
         ]);
+    }
+
+    /**
+     * As a logged-in user, I should be able to add a new Task.
+     * @test
+     */
+    public function it_can_add_a_new_task()
+    {
+        // Prepare
+        $user = $this->createUser();
+
+        // Execute
+        $response = $this->actingAs($user)->postJson('/api/tasks', [
+            'title' => $this->faker->words(6, true),
+            'description' => $this->faker->paragraph(),
+            'labels' => factory(Label::class)->times(2)->create()->pluck('id')
+        ]);
+
+        // Assert
+        $response->assertCreated();
+        $response->assertJsonStructure([
+            'data' => [
+                'id',
+                'title',
+                'description',
+                'labels' => ['*' => [
+                    'id',
+                    'label',
+                    'count',
+                ]]
+            ]
+        ]);
+        $response->assertJsonFragment(['count' => 1]);
     }
 }
