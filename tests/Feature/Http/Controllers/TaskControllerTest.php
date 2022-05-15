@@ -61,12 +61,16 @@ class TaskControllerTest extends FeatureTestCase
         $user->tasks()->createMany(
             factory(Task::class)->times(10)->make()->toArray()
         );
-        $user->tasks()->take(5)->each(function ($task) use ($filterLabel) {
-            $task->labels()->attach($filterLabel);
-        });
+
+        $user->tasks()
+            ->take(5)
+            ->get() // using each directly would cause this loop to run 10 times
+            ->each(function ($task) use ($filterLabel) {
+                $task->labels()->attach($filterLabel);
+            });
 
         // Execute
-        $response = $this->actingAs($user)->getJson('/api/tasks?filter[label]=' . $filterLabel->id);
+        $response = $this->actingAs($user)->getJson('/api/tasks?label=' . $filterLabel->id);
         // Assert
         $response->assertOk();
         $response->assertJsonCount(5, 'data');
