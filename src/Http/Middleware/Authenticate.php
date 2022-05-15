@@ -20,6 +20,10 @@ class Authenticate
      */
     public function handle(Request $request, Closure $next)
     {
+        if($request->user()) {
+            return $next($request);
+        }
+
         if (empty($request->bearerToken())) {
             throw new AuthenticationException;
         }
