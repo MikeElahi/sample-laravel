@@ -31,6 +31,7 @@ class LabelControllerTest extends FeatureTestCase
 
     /**
      * User may attempt to create a pre-existing label, the same label must be returned with 200 OK code
+     * @test
      */
     public function it_can_post_existing_label()
     {
@@ -43,6 +44,27 @@ class LabelControllerTest extends FeatureTestCase
         $response->assertOk();
         $this->assertDatabaseHas('labels', [
             'label' =>  $label,
+        ]);
+    }
+
+    /**
+     * As a logged-in user, I should be able to get list of labels.
+     * @test
+     */
+    public function it_can_get_a_list_of_labels()
+    {
+        factory(Label::class)->times(10)->create();
+
+        $response = $this->actingAs($this->createUser())->getJson('api/labels');
+
+        $response->assertOk();
+        $response->assertJsonCount(10, 'data');
+        $response->assertJsonStructure([
+            'data' => ['*' => [
+               'id',
+               'label',
+               'count',
+            ]],
         ]);
     }
 }
