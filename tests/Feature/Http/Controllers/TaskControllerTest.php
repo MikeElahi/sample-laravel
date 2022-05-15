@@ -26,18 +26,18 @@ class TaskControllerTest extends FeatureTestCase
         $response->assertOk();
         $response->assertJsonCount(5, 'data');
         $response->assertJsonStructure([
-            'data' => [
-              'id',
-              'title',
-              'description',
-              'labels' => [
-                  '*' => [
-                      'id',
-                      'label',
-                      'count',
-                  ]
-              ],
-            ],
+            'data' => [ '*' => [
+                'id',
+                'title',
+                'description',
+                'labels' => [
+                    '*' => [
+                        'id',
+                        'label',
+                        'count',
+                    ]
+                ],
+            ]],
         ]);
     }
 }
