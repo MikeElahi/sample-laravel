@@ -12,5 +12,4 @@ Route::put('tasks/{task}', [TaskController::class, 'update']);
 Route::patch('tasks/{task}', [TaskController::class, 'updateStatus']);
 Route::post('tasks/{task}/labels', LabelTaskController::class);
 
-//Route::apiResource('tasks', TaskController::class);
-Route::apiResource('labels', LabelController::class);
+Route::apiResource('labels', LabelController::class)->only(['index', 'store']);
