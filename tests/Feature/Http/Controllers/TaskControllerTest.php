@@ -172,7 +172,7 @@ class TaskControllerTest extends FeatureTestCase
         );
 
         $response = $this->patchJson("/api/tasks/{$task->id}", [
-           'status' => Task::STATUS_CLOSE,
+            'status' => Task::STATUS_CLOSE,
         ]);
 
         $response->assertNoContent();
