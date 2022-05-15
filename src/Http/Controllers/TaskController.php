@@ -48,4 +48,13 @@ class TaskController extends BaseController
             ->update($request->only(['title', 'description']));
         return response(null, Response::HTTP_NO_CONTENT);
     }
+
+    public function updateStatus(int $task, Request $request)
+    {
+        Task::query()
+            ->where('id', $task)
+            ->update(['status' => $request->input('status')]);
+
+        return response(null, Response::HTTP_NO_CONTENT);
+    }
 }
