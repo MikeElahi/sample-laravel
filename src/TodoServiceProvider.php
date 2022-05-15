@@ -19,6 +19,7 @@ class TodoServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         $this->loadFactoriesFrom(__DIR__.'/../database/factories');
         $this->registerRoutes();
+        $this->exportConfiguration();
     }
 
     /**
@@ -36,5 +37,16 @@ class TodoServiceProvider extends ServiceProvider
         Route::group(['middleware' => config('todo.middleware'), 'prefix' => config('todo.prefix')], function () {
             $this->loadRoutesFrom(__DIR__.'/../routes/api.php');
         });
+    }
+
+    protected function exportConfiguration()
+    {
+        if ($this->app->runningInConsole()) {
+
+            $this->publishes([
+                __DIR__.'/../config/todo.php' => config_path('todo.php'),
+            ], 'config');
+
+        }
     }
 }

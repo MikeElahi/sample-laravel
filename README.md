@@ -5,6 +5,19 @@
 
 This Laravel 7.x package is a sample laravel package that adds the to-do functionality to your existing laravel project.
 
+## Installation
+You will need to install this package from packagist:
+
+```sh
+composer require wigeeky/todo
+```
+This package is made to work out of the box, however, if you need to 
+customize this package's prefix and middlewares, you can publish the 
+project configuration file:
+```sh
+php artisan vendor:publish --provider="WiGeeky\Todo\TodoServiceProvider" --tag="config"
+```
+
 ## Entities
 This package uses 3 entities to provide the to-do functionality:
 * User (Provided by your main Laravel project)
