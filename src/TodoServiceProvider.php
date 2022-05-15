@@ -15,6 +15,7 @@ class TodoServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->mergeConfigFrom(__DIR__ . "/../config/todo.php", "todo");
         $this->loadMigrationsFrom(__DIR__ . "/../database/migrations");
         $this->loadFactoriesFrom(__DIR__ . "/../database/factories");
         $this->registerRoutes();
@@ -32,8 +33,7 @@ class TodoServiceProvider extends ServiceProvider
 
     protected function registerRoutes()
     {
-        // TODO add config support
-        Route::group(['middleware' => 'authenticate', 'prefix' => 'api'], function () {
+        Route::group(['middleware' => config('todo.middleware'), 'prefix' => config('todo.prefix')], function () {
             $this->loadRoutesFrom(__DIR__.'/../routes/api.php');
         });
     }
