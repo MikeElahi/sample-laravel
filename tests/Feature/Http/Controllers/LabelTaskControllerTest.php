@@ -24,7 +24,7 @@ class LabelTaskControllerTest extends TestCase
 
         $response = $this->actingAs($this->user)->postJson(
             "/api/tasks/{$task->id}/labels",
-            factory(Label::class)->times($times)->make()->pluck('label')->toArray(),
+            factory(Label::class)->times($times)->create()->pluck('id')->toArray(),
         );
 
         $response->assertNoContent();
