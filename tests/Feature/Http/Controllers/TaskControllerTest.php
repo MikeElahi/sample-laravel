@@ -108,4 +108,28 @@ class TaskControllerTest extends FeatureTestCase
         ]);
         $response->assertJsonFragment(['count' => 1]);
     }
+
+
+    /**
+     * As a logged-in user, I should be able to edit a Task. (Title and Description)
+     * @test
+     */
+    public function it_can_update_an_existing_task()
+    {
+        // Prepare
+        $user = $this->createUser();
+        $task = $user->tasks()->create(
+            factory(Task::class)->make()->toArray()
+        );
+        $newTitle = $this->faker->words(6, true);
+
+        // Execute
+        $response = $this->actingAs($user)->putJson("/api/tasks/{$task->id}", [
+            'title' => $newTitle,
+            'description' => $this->faker->paragraph(),
+        ]);
+
+        $response->assertNoContent();
+        $this->assertDatabaseHas('tasks', ['title' => $newTitle]);
+    }
 }
