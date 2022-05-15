@@ -2,11 +2,13 @@
 
 namespace WiGeeky\Todo\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Support\Facades\Gate;
+use WiGeeky\Todo\Http\Requests\Task\TaskIndexRequest;
+use WiGeeky\Todo\Http\Requests\Task\TaskStoreRequest;
+use WiGeeky\Todo\Http\Requests\Task\TaskUpdateRequest;
+use WiGeeky\Todo\Http\Requests\Task\TaskUpdateStatusRequest;
 use WiGeeky\Todo\Http\Resources\TaskResource;
 use WiGeeky\Todo\Models\Task;
 
@@ -17,7 +19,7 @@ class TaskController extends BaseController
         $this->middleware('auth');
     }
 
-    public function index(Request $request): AnonymousResourceCollection
+    public function index(TaskIndexRequest $request): AnonymousResourceCollection
     {
         return TaskResource::collection(
             Task::query()
@@ -33,7 +35,7 @@ class TaskController extends BaseController
         return TaskResource::make(Task::query()->with('labels')->findOrFail($task));
     }
 
-    public function store(Request $request): TaskResource
+    public function store(TaskStoreRequest $request): TaskResource
     {
         $task = Task::query()
             ->create(array_merge(
@@ -48,7 +50,7 @@ class TaskController extends BaseController
         );
     }
 
-    public function update(int $task, Request $request)
+    public function update(int $task, TaskUpdateRequest $request)
     {
         Task::query()
             ->where('id', $task)
@@ -56,7 +58,7 @@ class TaskController extends BaseController
         return response(null, Response::HTTP_NO_CONTENT);
     }
 
-    public function updateStatus(int $task, Request $request)
+    public function updateStatus(int $task, TaskUpdateStatusRequest $request)
     {
         Task::query()
             ->where('id', $task)
