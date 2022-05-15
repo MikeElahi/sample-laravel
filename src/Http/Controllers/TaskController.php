@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Gate;
 use WiGeeky\Todo\Http\Resources\TaskResource;
 use WiGeeky\Todo\Models\Task;
 
@@ -29,7 +30,12 @@ class TaskController extends BaseController
 
     public function show(int $task): TaskResource
     {
-        return TaskResource::make(Task::query()->with('labels')->findOrFail($task));
+        $task = Task::query()->with('labels')->findOrFail($task);
+
+        // TODO move authorization to policy
+        abort_if(Gate::denies('view task', [$task, ]), Response::HTTP_NOT_FOUND);
+
+        return TaskResource::make($task);
     }
 
     public function store(Request $request): TaskResource
