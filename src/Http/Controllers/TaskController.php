@@ -4,6 +4,7 @@ namespace WiGeeky\Todo\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Response;
 use Illuminate\Routing\Controller as BaseController;
 use WiGeeky\Todo\Http\Resources\TaskResource;
 use WiGeeky\Todo\Models\Task;
@@ -38,5 +39,13 @@ class TaskController extends BaseController
         return TaskResource::make(
             $task->load('labels'),
         );
+    }
+
+    public function update(int $task, Request $request)
+    {
+        Task::query()
+            ->where('id', $task)
+            ->update($request->only(['title', 'description']));
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }
