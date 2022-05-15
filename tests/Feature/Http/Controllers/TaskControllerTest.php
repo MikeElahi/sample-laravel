@@ -48,6 +48,31 @@ class TaskControllerTest extends FeatureTestCase
     }
 
     /**
+     * As a logged-in user, I should be able to get list of tasks with labels.
+     * @test
+     */
+    public function it_can_get_tasks_filtered_by_label()
+    {
+        // Prepare
+        $user = $this->createUser();
+        /** @var Label $filterLabel */
+        $filterLabel = factory(Label::class)->create();
+
+        $user->tasks()->createMany(
+            factory(Task::class)->times(10)->make()->toArray()
+        );
+        $user->tasks()->take(5)->each(function ($task) use ($filterLabel) {
+            $task->labels()->attach($filterLabel);
+        });
+
+        // Execute
+        $response = $this->actingAs($user)->getJson('/api/tasks?filter[label]=' . $filterLabel->id);
+        // Assert
+        $response->assertOk();
+        $response->assertJsonCount(5, 'data');
+    }
+
+    /**
      * As a logged-in user, I should not be able to get list of other user's tasks.
      * @test
      */
