@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Builder;
+use WiGeeky\Todo\Events\TaskUpdating;
 use WiGeeky\Todo\Todo;
 
 /**
@@ -23,6 +24,10 @@ class Task extends Model
     const STATUS_CLOSE = 'CLOSE';
 
     protected $guarded = ['id'];
+
+    protected $dispatchesEvents = [
+        'updating' => TaskUpdating::class,
+    ];
 
     public function user(): BelongsTo
     {
