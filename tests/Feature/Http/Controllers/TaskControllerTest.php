@@ -77,6 +77,40 @@ class TaskControllerTest extends FeatureTestCase
     }
 
     /**
+     * As a logged-in user, I should be able to get details of a task.
+     * @test
+     */
+    public function it_can_get_details_about_a_specific_task()
+    {
+        // Prepare
+        $user = $this->createUser();
+        /** @var Task $task */
+        $task = $user->tasks()->create(
+            factory(Task::class)->make()->toArray()
+        );
+        $task->labels()->attach(factory(Label::class)->create());
+
+        // Execute
+        $response = $this->actingAs($user)->getJson("/api/tasks/{$task->id}");
+        // Assert
+        $response->assertOk();
+        $response->assertJsonStructure([
+            'data' => [
+                'id',
+                'title',
+                'description',
+                'labels' => [
+                    '*' => [
+                        'id',
+                        'label',
+                        'count',
+                    ]
+                ],
+            ],
+        ]);
+    }
+
+    /**
      * As a logged-in user, I should not be able to get list of other user's tasks.
      * @test
      */
