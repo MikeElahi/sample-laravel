@@ -11,7 +11,7 @@ class LabelResource extends JsonResource
         return [
             'id' => $this->resource->id,
             'label' => $this->resource->label,
-            'count' => $this->resource->tasks->count(),
+            'count' => $this->whenLoaded('tasks', $this->resource->tasks->count(), 0),
         ];
     }
 }
