@@ -111,6 +111,26 @@ class TaskControllerTest extends FeatureTestCase
     }
 
     /**
+     * As a logged-in user, I should not be able to get details of other user's tasks.
+     * @test
+     */
+    public function it_does_not_show_other_users_task()
+    {
+        // Prepare
+        $someOtherUser = $this->createUser();
+        /** @var Task $task */
+        $task = $someOtherUser->tasks()->create(
+            factory(Task::class)->make()->toArray()
+        );
+
+        // Execute
+        $response = $this->actingAs($this->createUser())->getJson("/api/tasks/{$task->id}");
+
+        // Assert
+        $response->assertNotFound();
+    }
+
+    /**
      * As a logged-in user, I should not be able to get list of other user's tasks.
      * @test
      */
