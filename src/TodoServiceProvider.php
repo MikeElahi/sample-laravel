@@ -42,11 +42,9 @@ class TodoServiceProvider extends ServiceProvider
     protected function exportConfiguration()
     {
         if ($this->app->runningInConsole()) {
-
             $this->publishes([
                 __DIR__.'/../config/todo.php' => config_path('todo.php'),
             ], 'config');
-
         }
     }
 }
