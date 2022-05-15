@@ -27,6 +27,11 @@ class TaskController extends BaseController
         );
     }
 
+    public function show(int $task): TaskResource
+    {
+        return TaskResource::make(Task::query()->with('labels')->findOrFail($task));
+    }
+
     public function store(Request $request): TaskResource
     {
         $task = Task::query()
