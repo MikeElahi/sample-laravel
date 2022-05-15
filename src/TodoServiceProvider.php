@@ -5,6 +5,7 @@ namespace WiGeeky\Todo;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use WiGeeky\Todo\Providers\EventServiceProvider;
 
 class TodoServiceProvider extends ServiceProvider
 {
@@ -28,7 +29,7 @@ class TodoServiceProvider extends ServiceProvider
      */
     public function register()
     {
-
+        $this->app->register(EventServiceProvider::class);
     }
 
     protected function registerRoutes()
