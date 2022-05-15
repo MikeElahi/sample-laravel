@@ -20,8 +20,9 @@ class TaskController extends BaseController
     {
         return TaskResource::collection(
             Task::query()
-                ->where('user_id', $request->user()->id)
                 ->with('labels')
+                ->user($request->user()->id)
+                ->label($request->input('label'))
                 ->paginate()
         );
     }

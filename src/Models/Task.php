@@ -5,6 +5,7 @@ namespace WiGeeky\Todo\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Builder;
 use WiGeeky\Todo\Todo;
 
 /**
@@ -31,5 +32,24 @@ class Task extends Model
     public function labels(): BelongsToMany
     {
         return $this->belongsToMany(Label::class);
+    }
+
+    public function scopeUser(Builder $query, $value): Builder
+    {
+        if(empty($value)) {
+            return $query;
+        }
+
+        return $query->where('user_id', $value);
+    }
+
+    public function scopeLabel(Builder $query, $value)
+    {
+        if(empty($value)) {
+            return $query;
+        }
+        return $query->whereHas('labels', function (Builder $q) use ($value) {
+            $q->where('id', $value);
+        });
     }
 }
