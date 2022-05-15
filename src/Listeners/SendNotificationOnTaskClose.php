@@ -14,8 +14,7 @@ class SendNotificationOnTaskClose
     {
         if ($event->task->isDirty('status') and
             $event->task->status == Task::STATUS_CLOSE and
-            in_array(Notifiable::class, class_uses(Todo::$authModel)))
-        {
+            in_array(Notifiable::class, class_uses(Todo::$authModel))) {
             $event->task->user->notify(new TaskWasClosedNotification($event->task));
         }
     }

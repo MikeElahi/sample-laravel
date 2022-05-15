@@ -14,8 +14,7 @@ class LabelTaskStoreRequest extends FormRequest
     public function rules()
     {
         return [
-          '*' => ['int', 'exists:labels,id']
+            '*' => ['int', 'exists:labels,id'],
         ];
     }
-
 }

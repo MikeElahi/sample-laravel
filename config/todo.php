@@ -1,8 +1,9 @@
 <?php
+
 return [
-    'prefix' => 'api',
+    'prefix'     => 'api',
     'middleware' => [
         \WiGeeky\Todo\Http\Middleware\Authenticate::class,
         \WiGeeky\Todo\Http\Middleware\Authorize::class,
-    ]
+    ],
 ];

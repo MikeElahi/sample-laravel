@@ -37,7 +37,7 @@ class TestCase extends Orchestra
         parent::setUpTraits();
         $uses = \array_flip(\class_uses_recursive(static::class));
 
-        if(isset($uses[WithUser::class])) {
+        if (isset($uses[WithUser::class])) {
             $this->setUpWithUser();
         }
     }

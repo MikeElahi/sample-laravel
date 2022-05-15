@@ -15,5 +15,4 @@ class EventServiceProvider extends ServiceProvider
             WriteLogOnTaskClose::class,
         ],
     ];
-
 }

@@ -2,7 +2,6 @@
 
 namespace WiGeeky\Todo\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Routing\Controller as BaseController;
 use WiGeeky\Todo\Http\Requests\LabelStoreRequest;

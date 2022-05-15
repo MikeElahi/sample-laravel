@@ -2,11 +2,11 @@
 
 namespace WiGeeky\Todo\Tests\Unit\Listeners;
 
+use Illuminate\Support\Facades\Log;
 use WiGeeky\Todo\Events\TaskUpdating;
 use WiGeeky\Todo\Listeners\WriteLogOnTaskClose;
 use WiGeeky\Todo\Models\Task;
 use WiGeeky\Todo\Tests\TestCase;
-use Illuminate\Support\Facades\Log;
 
 class WriteLogOnTaskCloseTest extends TestCase
 {
@@ -21,7 +21,7 @@ class WriteLogOnTaskCloseTest extends TestCase
         Log::shouldReceive('info')->once();
         $task->status = Task::STATUS_CLOSE;
 
-        (new WriteLogOnTaskClose)->handle(
+        (new WriteLogOnTaskClose())->handle(
             new TaskUpdating($task)
         );
     }

@@ -20,7 +20,7 @@ class TaskWasClosedNotificationTest extends TestCase
     public function it_can_notify_a_user_when_their_task_is_closed()
     {
         Notification::fake();
-        
+
         /** @var Task $task */
         $task = $this->createTask();
 

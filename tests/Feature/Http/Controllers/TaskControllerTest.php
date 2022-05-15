@@ -13,12 +13,13 @@ class TaskControllerTest extends TestCase
 
     /**
      * As a logged-in user, I should be able to get list of tasks with labels.
+     *
      * @test
      */
     public function it_can_get_list_of_tasks_with_labels()
     {
         // Prepare
-        
+
         $this->createTask(5);
         $this->user->tasks()->each(function ($task) {
             $task->labels()->attach(factory(Label::class)->create());
@@ -39,7 +40,7 @@ class TaskControllerTest extends TestCase
                         'id',
                         'label',
                         'count',
-                    ]
+                    ],
                 ],
             ]],
         ]);
@@ -47,12 +48,13 @@ class TaskControllerTest extends TestCase
 
     /**
      * As a logged-in user, I should be able to get list of tasks with labels.
+     *
      * @test
      */
     public function it_can_get_tasks_filtered_by_label()
     {
         // Prepare
-        
+
         /** @var Label $filterLabel */
         $filterLabel = factory(Label::class)->create();
         $this->createTask(10);
@@ -65,7 +67,7 @@ class TaskControllerTest extends TestCase
             });
 
         // Execute
-        $response = $this->actingAs($this->user)->getJson('/api/tasks?label=' . $filterLabel->id);
+        $response = $this->actingAs($this->user)->getJson('/api/tasks?label='.$filterLabel->id);
         // Assert
         $response->assertOk();
         $response->assertJsonCount(5, 'data');
@@ -73,12 +75,13 @@ class TaskControllerTest extends TestCase
 
     /**
      * As a logged-in user, I should be able to get details of a task.
+     *
      * @test
      */
     public function it_can_get_details_about_a_specific_task()
     {
         // Prepare
-        
+
         /** @var Task $task */
         $task = $this->createTask();
         $task->labels()->attach(factory(Label::class)->create());
@@ -97,7 +100,7 @@ class TaskControllerTest extends TestCase
                         'id',
                         'label',
                         'count',
-                    ]
+                    ],
                 ],
             ],
         ]);
@@ -105,6 +108,7 @@ class TaskControllerTest extends TestCase
 
     /**
      * As a logged-in user, I should not be able to get details of other user's tasks.
+     *
      * @test
      */
     public function it_does_not_show_other_users_task()
@@ -125,6 +129,7 @@ class TaskControllerTest extends TestCase
 
     /**
      * As a logged-in user, I should not be able to get list of other user's tasks.
+     *
      * @test
      */
     public function it_does_not_list_other_user_tasks()
@@ -151,15 +156,16 @@ class TaskControllerTest extends TestCase
 
     /**
      * As a logged-in user, I should be able to add a new Task.
+     *
      * @test
      */
     public function it_can_add_a_new_task()
     {
         // Execute
         $response = $this->actingAs($this->user)->postJson('/api/tasks', [
-            'title' => $this->faker->words(6, true),
+            'title'       => $this->faker->words(6, true),
             'description' => $this->faker->paragraph(),
-            'labels' => factory(Label::class)->times(2)->create()->pluck('id')
+            'labels'      => factory(Label::class)->times(2)->create()->pluck('id'),
         ]);
 
         // Assert
@@ -173,15 +179,15 @@ class TaskControllerTest extends TestCase
                     'id',
                     'label',
                     'count',
-                ]]
-            ]
+                ]],
+            ],
         ]);
         $response->assertJsonFragment(['count' => 1]);
     }
 
-
     /**
-     * As a logged-in user, I should be able to edit a Task. (Title and Description)
+     * As a logged-in user, I should be able to edit a Task. (Title and Description).
+     *
      * @test
      */
     public function it_can_update_an_existing_task()
@@ -189,7 +195,7 @@ class TaskControllerTest extends TestCase
         $task = $this->createTask();
         $newTitle = $this->faker->words(6, true);
         $response = $this->actingAs($this->user)->putJson("/api/tasks/{$task->id}", [
-            'title' => $newTitle,
+            'title'       => $newTitle,
             'description' => $this->faker->paragraph(),
         ]);
 
@@ -204,7 +210,6 @@ class TaskControllerTest extends TestCase
      */
     public function it_can_update_existing_task_status()
     {
-        
         $task = $this->createTask();
 
         $response = $this->actingAs($this->user)->patchJson("/api/tasks/{$task->id}", [
