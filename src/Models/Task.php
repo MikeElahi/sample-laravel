@@ -3,6 +3,9 @@
 namespace WiGeeky\Todo\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use WiGeeky\Todo\Todo;
 
 /**
  * Task Model
@@ -19,4 +22,14 @@ class Task extends Model
     const STATUS_CLOSE = 'CLOSE';
 
     protected $guarded = ['id'];
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(Todo::$authModel, 'user_id', 'id');
+    }
+
+    public function labels(): BelongsToMany
+    {
+        return $this->belongsToMany(Label::class);
+    }
 }
