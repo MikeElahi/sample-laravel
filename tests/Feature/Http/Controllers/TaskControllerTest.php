@@ -9,10 +9,7 @@ use WiGeeky\Todo\Tests\Feature\FeatureTestCase;
 
 class TaskControllerTest extends FeatureTestCase
 {
-    use WithoutMiddleware;
-
-    // Avoid testing Authenticate middleware
-
+    use WithoutMiddleware; // Avoid testing Authenticate middleware
 
     /**
      * As a logged-in user, I should be able to get list of tasks with labels.
@@ -131,5 +128,27 @@ class TaskControllerTest extends FeatureTestCase
 
         $response->assertNoContent();
         $this->assertDatabaseHas('tasks', ['title' => $newTitle]);
+    }
+
+    /**
+     * As a logged-in user, I should be able to change status of a Task.
+     *
+     * @test
+     */
+    public function it_can_update_existing_task_status()
+    {
+        $user = $this->createUser();
+        $task = $user->tasks()->create(
+            factory(Task::class)->make()->toArray()
+        );
+
+        $response = $this->patchJson("/api/tasks/{$task->id}", [
+           'status' => Task::STATUS_CLOSE,
+        ]);
+
+        $response->assertNoContent();
+        $this->assertDatabaseHas('tasks', [
+            'status' => Task::STATUS_CLOSE,
+        ]);
     }
 }
