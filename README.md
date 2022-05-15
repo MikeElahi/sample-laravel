@@ -1,4 +1,8 @@
 # Laravel To-Do
+![https://github.com/WiGeeky/todo/actions/](https://img.shields.io/badge/Coverage-100%25-brightgreen?style=flat-square)
+![](https://github.styleci.io/repos/491945425/shield)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/WiGeeky/todo/main?style=flat-square)](https://github.com/WiGeeky/todo/actions/)
+
 This Laravel 7.x package is a sample laravel package that adds the to-do functionality to your existing laravel project.
 
 ## Entities
