@@ -2,6 +2,7 @@
 
 namespace WiGeeky\Todo;
 
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
 class TodoServiceProvider extends ServiceProvider
@@ -15,6 +16,7 @@ class TodoServiceProvider extends ServiceProvider
     {
         $this->loadMigrationsFrom(__DIR__ . "/../database/migrations");
         $this->loadFactoriesFrom(__DIR__ . "/../database/factories");
+        $this->registerRoutes();
     }
 
     /**
@@ -25,5 +27,13 @@ class TodoServiceProvider extends ServiceProvider
     public function register()
     {
 
+    }
+
+    protected function registerRoutes()
+    {
+        // TODO add config support
+        Route::group(['middleware' => 'authenticate', 'prefix' => 'api'], function () {
+            $this->loadRoutesFrom(__DIR__.'/../routes/api.php');
+        });
     }
 }
