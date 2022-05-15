@@ -2,7 +2,9 @@
 
 namespace WiGeeky\Todo\Http\Controllers;
 
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Routing\Controller as BaseController;
+use WiGeeky\Todo\Http\Resources\TaskResource;
 use WiGeeky\Todo\Models\Task;
 
 class TaskController extends BaseController
@@ -12,8 +14,8 @@ class TaskController extends BaseController
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(): AnonymousResourceCollection
     {
-        return Task::query()->paginate();
+        return TaskResource::collection(Task::query()->with('labels')->paginate());
     }
 }
